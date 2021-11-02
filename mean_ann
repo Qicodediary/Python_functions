@@ -1,0 +1,13 @@
+#This function is used to calculate the annual mean of time series. The input 'Nyrs' means the period of time series and 'ts' should be the time series. 
+#If the datasets are 3D or 4D , just do the loop to make it 1D time series.
+def mean_ann(Nyrs, ts)
+    #Nyrs should be a intenger
+    ann_mean=np.full(Nyrs, np.nan)
+    if not np.isnan(ts[1]):
+        for y in range(1,Nyrs+1):#year index starts from 1
+            n1=12*(y-1)#insure matching index of ts which starts from 0
+            n2=12*y-1
+            ann_mean[y-1]=np.nanmean(ts[n1:n2])
+    else:
+        ann_mean[:]=float('nan')
+    return ann_mean
