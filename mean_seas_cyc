@@ -1,0 +1,18 @@
+#This function is used to calculate the seasonal averaged of time series datasets. 
+def mean_seas_cyc(ts):
+    NN=len(ts)
+    sm=np.zeros(12)#sm index starts from 0
+    sc_cnt=np.zeros(12)#sc_cnt index starts from 0
+    for n in range(1,NN+1):#n index starts from 1
+        if not np.isnan(ts[n-1]):#ts index starts from 0
+            m=n%12
+            if m==0:#indicating Dec if mod is 0
+               m=12
+            sm[m-1]=sm[m-1]+ts[n-1]# make sure for the right index
+            sc_cnt[m-1]=sc_cnt[m-1]+1
+    sc=np.full(12, np.nan)#sc index starts from 0
+    for m in range(0,12):
+        if sc_cnt[m-1]>0:
+            sc[m-1]=sm[m-1]/sc_cnt[m-1]
+    return sc
+
